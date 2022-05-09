@@ -11,7 +11,7 @@ router.get("/", function (req, res, next) {
       data: productsList,
     },
   });
-  cartItems=[]
+  // cartItems=[]
 });
 
 // app.use(bodyParser.urlencoded({ extended: false }));
@@ -26,9 +26,11 @@ router.post("/", (request, response) => {
 router.get("/cart", (req, res) => {
   if (Object.keys(cartItems).length) {
     res.json(cartItems);
+    console.log(cartItems);
   } else {
     res.status(400).json({ msg: "Empty Cart! Please add items" });
   }
 });
 
+console.log(cartItems);
 module.exports = router;

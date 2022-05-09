@@ -34,21 +34,20 @@ class App extends Component {
 
   fetchCartData = () => {
     fetch("http://localhost:9000/testAPI/cart")
-      .then((res) => {     
+      .then((res) => {
         console.log(res);
         if (res.status === 200) {
-          return res.json()
-        } 
-        // else {
-        //   this.setState({ fetchStatus: "Error" });
-        // }
-        return res.json()
-        
+          return res.json();
+        } else if (res.status === 400) {
+          this.setState({ cart: {},item:{} });
+          throw new Error("Empty Cart");
+        }
       })
       .then((result) => {
         console.log(result);
-        this.setState({ cart: { ...result.cart } });
-      });
+        this.setState({ cart: { ...result.cart }, item: { ...result.items } });
+      })
+      .catch((response) => console.log(response));
   };
 
   postData = () => {
@@ -58,21 +57,22 @@ class App extends Component {
         "Content-Type": "application/json",
       },
       method: "POST",
-      body: JSON.stringify({cart:this.state.cart,items:this.state.item}),
+      body: JSON.stringify({ cart: this.state.cart, items: this.state.item }),
     })
       .then((res) => res.json())
       .then((res) => console.log(res));
   };
 
-
   placeOrder = () => {
-    
-    this.setState((prevState) => ({
-      item: {},
-      orderId: 0,
-      total: 0,
-      lastOrderId: prevState.orderId,
-    }),this.postData);
+    this.setState(
+      (prevState) => ({
+        item: {},
+        orderId: 0,
+        total: 0,
+        lastOrderId: prevState.orderId,
+      }),
+      this.postData
+    );
   };
   increment = (id, callback = () => {}) => {
     // console.log(this.state.products[id].price);
@@ -147,7 +147,7 @@ class App extends Component {
           orderId: uniqueId,
         };
       }
-    },this.postData);
+    }, this.postData);
     // console.log(this.state.cart);
 
     // console.log("Cart Updated");
@@ -167,8 +167,9 @@ class App extends Component {
     }, callback);
   };
 
-  componentDidMount(){
-    this.fetchCartData()
+  componentDidMount() {
+    // if (this.state.total) 
+    this.fetchCartData();
   }
 
   render() {
