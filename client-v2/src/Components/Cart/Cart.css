@@ -1,0 +1,31 @@
+.error {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    
+}
+/* .cart{
+    background-color: lightgrey;
+
+} */
+.no-items-cart{
+    width:fit-content;
+    margin:auto
+}
+.no-items-cart img{
+    width: 100%;
+}
+
+.bill{
+    padding-top: 1rem;
+    display: flex;
+    justify-content: space-around;
+    box-shadow: 4px 1px 1px 1px rgba(238, 197, 63, 0.671);
+    
+}
+.cartItems{
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+
+}

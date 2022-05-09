@@ -1,0 +1,28 @@
+.error{
+    color:red;
+}
+
+.products {
+    margin-top: 1rem;
+    display: grid;
+    grid-template-columns: auto auto auto;
+    justify-content: space-evenly;
+    row-gap: 2rem;
+  }
+  
+  @media screen and (max-width: 700px) {
+    .products {
+      display: grid;
+      grid-template-columns: auto;
+      row-gap: 2rem;
+    }
+  }
+  
+  @media screen and (min-width: 700px) and (max-width: 1200px) {
+    .products {
+      display: grid;
+      grid-template-columns: auto auto;
+      row-gap: 2rem;
+    }
+  }
+  
