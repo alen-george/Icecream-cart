@@ -22,45 +22,73 @@ class App extends Component {
       total: 0,
       orderId: 0,
       lastOrderId: "",
-      fetchStatus: "",
     };
   }
 
-  getProduct = (productsList) => {
-    this.setState({
-      products: productsList,
-    });
-  };
-
+ 
   fetchCartData = () => {
-    fetch("http://localhost:9000/testAPI/cart")
+    fetch("http://localhost:9000/home/cart")
       .then((res) => {
         console.log(res);
         if (res.status === 200) {
           return res.json();
         } else if (res.status === 400) {
-          this.setState({ cart: {},item:{} });
+          this.setState({ cart: {}, item: {} });
           throw new Error("Empty Cart");
         }
       })
       .then((result) => {
         console.log(result);
-        this.setState({ cart: { ...result.cart }, item: { ...result.items } });
+        this.setState({
+          cart: { ...result.cart },
+          item: { ...result.items },
+          total: result.total,
+          orderId: result.orderId,
+          lastOrderId: result.lastOrderId,
+        });
       })
       .catch((response) => console.log(response));
   };
 
   postData = () => {
-    fetch("http://localhost:9000/testAPI", {
+    fetch("http://localhost:9000/home", {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
       method: "POST",
-      body: JSON.stringify({ cart: this.state.cart, items: this.state.item }),
+      body: JSON.stringify({
+        cart: this.state.cart,
+        items: this.state.item,
+        total: this.state.total,
+        orderId: this.state.orderId,
+        lastOrderId: this.state.lastOrderId,
+      }),
     })
       .then((res) => res.json())
       .then((res) => console.log(res));
+  };
+
+  callAPI = (url) => {
+    fetch(url)
+      .then((res) => res.json())
+      .then((result) => {
+        console.log(result);
+        if (result.code === 200) {
+          this.setState(
+            {
+              products: result.response.data,
+            },
+            // () => this.props.getProduct(this.callAPI)
+          );
+        } else {
+          this.setState({
+            logMessage: "HTTP 404 - No Response",
+          });
+        }
+      }).then(()=>{
+        this.fetchCartData();
+      });
   };
 
   placeOrder = () => {
@@ -75,7 +103,7 @@ class App extends Component {
     );
   };
   increment = (id, callback = () => {}) => {
-    // console.log(this.state.products[id].price);
+    console.log(this.state.products);
     this.setState(
       (prevState) => ({
         item: {
@@ -86,7 +114,7 @@ class App extends Component {
               1,
           },
         },
-        total: prevState.total + prevState.products[id].price,
+        total: prevState.total + this.state.products[id]?.price,
       }),
       callback
     );
@@ -168,8 +196,8 @@ class App extends Component {
   };
 
   componentDidMount() {
-    // if (this.state.total) 
-    this.fetchCartData();
+    // if (!Object.keys(this.state.item).length&&)
+    this.callAPI("http://localhost:9000/home");
   }
 
   render() {
@@ -184,7 +212,7 @@ class App extends Component {
             element={
               <Home
                 items={this.state.item}
-                getProduct={this.getProduct}
+                // getProduct={this.getProduct}
                 updateCart={this.updateCart}
                 increment={this.increment}
                 decrement={this.decrement}
@@ -262,3 +290,10 @@ export default App;
 //     orderId: uniqueId,
 //   };
 // }
+
+
+ // getProduct = (productsList) => {
+  //   this.setState({
+  //     products: productsList,
+  //   });
+  // };

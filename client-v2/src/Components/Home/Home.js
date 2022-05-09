@@ -22,7 +22,7 @@ class Home extends Component {
             {
               products: result.response.data,
             },
-            () => this.props.getProduct(this.state.products)
+            // () => this.props.getProduct(this.callAPI)
           );
         } else {
           this.setState({
@@ -33,7 +33,7 @@ class Home extends Component {
   };
 
   componentDidMount() {
-    this.callAPI("http://localhost:9000/testAPI");
+    this.callAPI("http://localhost:9000/home");
   }
   render() {
     return (

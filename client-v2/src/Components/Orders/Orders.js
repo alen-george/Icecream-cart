@@ -5,7 +5,7 @@ class Orders extends Component {
   render() {
     const { ordersList, productsList, lastOrderId } = this.props;
     const orders = Object.keys(ordersList);
-    console.log(orders);
+    // console.log(orders);
 
     return (
       <section>

@@ -19,10 +19,8 @@ export class Cart extends Component {
       });
   }
   componentDidUpdate(prevProp, prevState) {
-    // console.log(prevProp.items);
-    // console.log(this.props.items);
-    // prevProp.items!==this.props.items&&
-    if (prevProp.currOrderId === 0)
+   
+    if (prevProp.currOrderId!==this.props.currOrderId )
       this.setState({
         fetchStatus: false,
       });
@@ -46,7 +44,7 @@ export class Cart extends Component {
         ) : !!currOrderId ? (
           <div className="cartItems">
             {cartData.map((prodId) => {
-              // console.log(productsList[prodId]);
+              // console.log(productsList);
               const item = productsList[prodId];
               return (
                 <CartItem
@@ -89,3 +87,11 @@ export class Cart extends Component {
 }
 
 export default Cart;
+
+
+
+ // console.log(prevProp.items,prevState.fetchStatus,this.state.items);
+    // console.log(prevProp.currOrderId);
+    // prevProp.items!==this.props.items&&
+    // && this.state.items
+    //  && prevProp.currOrderId === 0
