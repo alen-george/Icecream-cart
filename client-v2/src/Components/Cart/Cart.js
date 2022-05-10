@@ -3,36 +3,15 @@ import CartItem from "./CartItem";
 import "./Cart.css";
 
 export class Cart extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      fetchStatus: true,
-      // order:false
-    };
-  }
-
-  componentDidMount() {
-    if (this.props.items)
-      this.setState({
-        fetchStatus: false,
-      });
-  }
-  componentDidUpdate(prevProp, prevState) {
-   
-    if (prevProp.currOrderId!==this.props.currOrderId )
-      this.setState({
-        fetchStatus: false,
-      });
-  }
+ 
   render() {
     const { productsList, myCart, items, placeOrder, currOrderId } = this.props;
-    // console.log(myCart);
+    console.log(currOrderId);
     const cartData = Object.keys(myCart || []);
     // console.log(cartData);
     return (
       <section className="cart">
-        {this.state.fetchStatus ? (
+        {!items ? (
           <div className="no-items-cart">
             <img
               src={
@@ -95,3 +74,27 @@ export default Cart;
     // prevProp.items!==this.props.items&&
     // && this.state.items
     //  && prevProp.currOrderId === 0
+
+
+     // constructor(props) {
+  //   super(props);
+
+  //   this.state = {
+  //     fetchStatus: true,
+  //     order:false
+  //   };
+  // }
+
+  // componentDidMount() {
+  //   if (this.props.items)
+  //     this.setState({
+  //       fetchStatus: false,
+  //     });
+  // }
+  // componentDidUpdate(prevProp, prevState) {
+   
+  //   if (prevProp.currOrderId!==this.props.currOrderId )
+  //     this.setState({
+  //       fetchStatus: false,
+  //     });
+  // }

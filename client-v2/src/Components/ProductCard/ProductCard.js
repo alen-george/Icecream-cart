@@ -35,7 +35,7 @@ class ProductCard extends Component {
           </span>
 
           <span>
-            {this.state.showDecrement && (
+            {(
               <button
                 className={"decrement"}
                 onClick={() => this.props.decrement(this.props.id)}
@@ -45,9 +45,9 @@ class ProductCard extends Component {
             )}
           </span>
         </p>
-        {this.state.showDecrement && <p>Quantity:{this.props.quantity}</p>}
+        {<p>Quantity:{this.props.quantity}</p>}
         <p>
-          {this.state.showDecrement && (
+          {(
             <button
               className="addToCart"
               onClick={() => this.props.updateCart(this.props.id)}

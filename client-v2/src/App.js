@@ -69,8 +69,8 @@ class App extends Component {
       .then((res) => console.log(res));
   };
 
-  callAPI = (url) => {
-    fetch(url)
+  getProductsLists = () => {
+    fetch("http://localhost:9000/home")
       .then((res) => res.json())
       .then((result) => {
         console.log(result);
@@ -197,7 +197,7 @@ class App extends Component {
 
   componentDidMount() {
     // if (!Object.keys(this.state.item).length&&)
-    this.callAPI("http://localhost:9000/home");
+    this.getProductsLists();
   }
 
   render() {
@@ -212,7 +212,8 @@ class App extends Component {
             element={
               <Home
                 items={this.state.item}
-                // getProduct={this.getProduct}
+                products={this.state.products}
+                getProductsLists={this.getProductsLists}
                 updateCart={this.updateCart}
                 increment={this.increment}
                 decrement={this.decrement}

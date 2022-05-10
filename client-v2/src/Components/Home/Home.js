@@ -7,39 +7,21 @@ class Home extends Component {
     super(props);
 
     this.state = {
-      products: [],
-      logMessage: true,
+      // products: [],
+      logMessage: "HTTP 404 - No Response",
     };
   }
 
-  callAPI = (url) => {
-    fetch(url)
-      .then((res) => res.json())
-      .then((result) => {
-        // console.log(result);
-        if (result.code === 200) {
-          this.setState(
-            {
-              products: result.response.data,
-            },
-            // () => this.props.getProduct(this.callAPI)
-          );
-        } else {
-          this.setState({
-            logMessage: "HTTP 404 - No Response",
-          });
-        }
-      });
-  };
+  // 
 
   componentDidMount() {
-    this.callAPI("http://localhost:9000/home");
+    this.props.getProductsLists("http://localhost:9000/home");
   }
   render() {
     return (
       <div className="products">
-        {Object.keys(this.state.products).length ? (
-          Object.values(this.state.products).map((item,index) => {
+        {Object.keys(this.props.products).length ? (
+          Object.values(this.props.products).map((item,index) => {
             return (
               <ProductCard
                 key={index}
@@ -64,3 +46,24 @@ class Home extends Component {
 }
 
 export default Home;
+
+
+// callAPI = (url) => {
+  //   fetch(url)
+  //     .then((res) => res.json())
+  //     .then((result) => {
+  //       // console.log(result);
+  //       if (result.code === 200) {
+  //         this.setState(
+  //           {
+  //             products: result.response.data,
+  //           },
+  //           // () => this.props.getProduct(this.callAPI)
+  //         );
+  //       } else {
+  //         this.setState({
+  //           logMessage: "HTTP 404 - No Response",
+  //         });
+  //       }
+  //     });
+  // };

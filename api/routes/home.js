@@ -2,7 +2,7 @@ var express = require("express");
 var router = express.Router();
 const productsList = require("../Product");
 
-let cartItems = [];
+let cartItems = {};
 
 router.get("/", function (req, res, next) {
   res.send({
@@ -38,5 +38,5 @@ router.get("/cart", (req, res) => {
   }
 });
 
-console.log(cartItems);
+// console.log(cartItems);
 module.exports = router;
